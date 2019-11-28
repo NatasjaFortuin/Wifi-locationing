@@ -117,6 +117,14 @@ postResample(pred = predictions_KNNB1Lat, obs = Test_B1_lat$LATITUDE)
 #    RMSE  Rsquared       MAE 
 # 6.7663285 0.9645302 4.4480253
 
+error_KNNB1Lat <- predictions_KNNB0Lat - Test_B0_lat$LATITUDE 
+rmse_KNNB1Lat <- sqrt(mean(error_KNNB1Lat^2))
+rmse_KNNB1Lat
+rsquared_KNNB1Lat <- 1 - (sum(error_KNNB1Lat^2) / 
+                            sum((Test_B1_lat$LATITUDE-mean(Test_B1_lat$LATITUDE))^2))
+rsquared_KNNB1Lat <- rsquared_KNNB1Lat * 100
+rsquared_KNNB1Lat
+
 ## Long----
 predictions_KNNB1Long= predict(Fit_long_B1, Test_B1_long)
 
@@ -148,6 +156,14 @@ postResample(pred = predictions_KNNB2Lat, obs = Test_B2_lat$LATITUDE)
 #RMSE       Rsquared       MAE 
 #6.0978035  0.9547484 3.4121850 
 
+error_KNNB2Lat <- predictions_KNNB2Lat - Test_B2_lat$LATITUDE 
+rmse_KNNB2Lat <- sqrt(mean(error_KNNB2Lat^2))
+rmse_KNNB2Lat
+rsquared_KNNB2Lat <- 1 - (sum(error_KNNB2Lat^2) / 
+                            sum((Test_B2_lat$LATITUDE-mean(Test_B2_lat$LATITUDE))^2))
+rsquared_KNNB2Lat <- rsquared_KNNB2Lat * 100
+rsquared_KNNB2Lat
+
 ## Long----
 predictions_KNNB2Long= predict(Fit_long_B2, Test_B2_long)
 
@@ -155,6 +171,14 @@ predictions_KNNB2Long= predict(Fit_long_B2, Test_B2_long)
 postResample(pred = predictions_KNNB2Long, obs = Test_B2_long$LONGITUDE)
 #RMSE       Rsquared       MAE 
 #9.2788440  0.9006733 4.9395021  
+
+error_KNNB2long <-predictions_KNNB2Long - Test_B2_long$LONGITUDE 
+rmse_KNNB2Long <- sqrt(mean(error_KNNB2Long^2))
+rmse_KNNB2Long
+rsquared_KNNB2Long <- 1 - (sum(error_KNNB2Long^2) / 
+                            sum((Test_B2_lat$LONGITUDE-mean(Test_B2_long$LONGITUDE))^2))
+rsquared_KNNB2Long <- rsquared_KNNB2Long * 100
+rsquared_KNNB2Long
 
 ## Floor----
 predictions_KNNB2Floor= predict(object = KNNB2Floor, newdata = Test_B2_Floor)
@@ -168,9 +192,33 @@ CF_B2_Floor <- table(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
 accuracy_KNNB2Floor <- (sum(diag(CF_B2_Floor))) / sum(CF_B2_Floor)
 accuracy_KNNB2Floor <- accuracy_KNNB2Floor * 100
 accuracy_KNNB2Floor
-confusionMatrix(CF_B2_Floor)
-fourfoldplot(ctable, color = c("#CC6666", "#99CC99"),
-             conf.level = 0, margin = 1, main = "Confusion Matrix")
 
-#Build dataframe with predictions
+# Lat KPI----
+postResample(pred = predictions_KNNB1Lat, obs = Test_B1_lat$LATITUDE)
+#    RMSE  Rsquared       MAE 
+# 6.7663285 0.9645302 4.4480253
+
+#Build dataframe----
+#Create dataframes
+#rmse 
+
+
+latitude.rmse <- data.frame(metricas = c("KNN.0", "RFOREST.0", "KNN.1", "RFOREST.1", "KNN.2", "RFOREST.2"),
+                            values = c(rmse.knn.lat.0, rmse.rfor.lat.0, rmse.knn.lat.1, rmse.rfor.lat.1,
+                                       rmse.knn.lat.2, rmse.rfor.lat.2))
+
+longitude.rmse <- data.frame(metricas = c("KNN.0", "RFOREST.0", "KNN.1", "RFOREST.1", "KNN.2", "RFOREST.2"),
+                             values = c(rmse.knn.long.0, rmse.rfor.long.0, rmse.knn.long.1, rmse.rfor.long.1,
+                                        rmse.knn.long.2, rmse.rfor.long.2))
+
+#rsquared
+latitude.rsquared <- data.frame(metricas = c("KNN.0", "RFOREST.0", "KNN.1", "RFOREST.1", "KNN.2", "RFOREST.2"),
+                                values = c(rsquared.knn.lat.0, rsquared.rfor.lat.0, rsquared.knn.lat.1, rsquared.rfor.lat.1,
+                                           rsquared.knn.lat.2, rsquared.rfor.lat.2))
+
+longitude.rsquared <- data.frame(metricas = c("KNN.0", "RFOREST.0", "KNN.1", "RFOREST.1", "KNN.2", "RFOREST.2),
+rsquared.rfor.long.1, rsquared.knn.long.2, rsquared.rfor.long.2))
+
+floor.accuracy <- data.frame(metricas = c("KNN.0", "RFOREST.0", "KNN.1", "RFOREST.1", "KNN.2", "RFOREST.2"),
+                             values = c(accuracy.knn.floor.0, accuracy.rfor.floor.0, accuracy.knn.floor.1,                                                      accuracy.rfor.floor.1, accuracy.knn.floor.2, accuracy.rfor.floor.2)
 
