@@ -109,17 +109,6 @@ postResample(pred = predict(object = Fit_lat_B0,
 #   RMSE     Rsquared MAE 
 #   6.7003103 0.9609583 4.0250448
 
-#Predict Output----
-predictions_KNNB0Lat= predict(Fit_lat_B0, testing_B0_lat[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB0Lat)
-str(predictions_KNNB0Lat)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB0Lat[, 521])
-
 Fit_lat_B1 <- train(LATITUDE~., 
                     data = training_B1_lat, 
                     method = "kknn", 
@@ -139,17 +128,6 @@ postResample(pred = predict(object = Fit_lat_B1,
 #   RMSE     Rsquared MAE 
 #   6.7663285 0.9645302 4.4480253
 
-#Predict Output----
-predictions_KNNB1Lat= predict(Fit_lat_B1, testing_B1_lat[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB1Lat)
-str(predictions_KNNB1Lat)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB1Lat, testing_B1_lat[, 521])
-
 Fit_lat_B2 <- train(LATITUDE~., 
                     data = training_B2_lat, 
                     method = "kknn", 
@@ -168,17 +146,6 @@ postResample(pred = predict(object = Fit_lat_B2,
              obs = testing_B2_lat$LATITUDE)
 #   RMSE      Rsquared  MAE 
 #   6.0978035 0.9547484 3.4121850 
-
-#Predict Output----
-predictions_KNNB2Lat= predict(Fit_lat_B2, testing_B2_lat[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB2Lat)
-str(predictions_KNNB2Lat)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB2Lat[,521])
 
 ## LONGITUDE----
 Fit_long_B0 <- train(LONGITUDE~., 
@@ -200,17 +167,6 @@ postResample(pred = predict(object = Fit_long_B0,
 #   RMSE      Rsquared  MAE 
 #   6.5256682 0.9337054 4.1474910 
 
-#Predict Output----
-predictions_KNNB0Long= predict(Fit_long_B0, testing_B0_long[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB0Long)
-str(predictions_KNNB0Long)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB0Long, testing_B0_long[,521])
-
 Fit_long_B1 <- train(LONGITUDE~., 
                     data = training_B1_long, 
                     method = "kknn", 
@@ -230,17 +186,6 @@ postResample(pred = predict(object = Fit_long_B1,
 #   RMSE      Rsquared  MAE 
 #   7.890551 0.974103 5.055423
 
-#Predict Output----
-predictions_KNNB1Long= predict(Fit_long_B1, testing_B1_long[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB1Long)
-str(predictions_KNNB1Long)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB1Long, testing_B1_long[, 521])
-
 Fit_long_B2 <- train(LONGITUDE~., 
                     data = training_B2_long, 
                     method = "kknn", 
@@ -259,17 +204,6 @@ postResample(pred = predict(object = Fit_long_B2,
              obs = testing_B2_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
 #   9.2788440 0.9006733 4.9395021
-
-#Predict Output----
-predictions_KNNB2Long= predict(Fit_long_B2, testing_B2_long[, 1:520])
-
-#Evaluate predictions----
-table(predictions_KNNB2Long)
-str(predictions_KNNB2Long)
-
-#Confusion matrix----
-####REVIEW#### 
-confusionMatrix(predictions_KNNB2Long, testing_B2_long[,521])
 
 ## FLOOR----
 training_B0_floor_factor <- training_B0_floor %>% 
