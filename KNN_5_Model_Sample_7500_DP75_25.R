@@ -248,3 +248,5 @@ saveRDS(Fit_floor_B2, file = "KNN_Fit_floor_B2.rds")
 #k   Accuracy   Kappa     
 #5   0.9276070  0.9073784
 
+
+

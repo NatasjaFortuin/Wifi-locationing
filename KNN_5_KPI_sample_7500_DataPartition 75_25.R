@@ -2,7 +2,8 @@ library(readr)
 library(caret)
 library(lattice)
 library(ggplot2)
-library(dplyr)
+library(tidyverse)
+library(gmodels)
 
 #### KNN ####
 
@@ -107,10 +108,31 @@ KNNB0Floor
 #5    0.8679156  0.8235844
 
 #Confusion matrix & KPI----
-CF_B0_Floor <- table(predictions_KNNB0Floor, Test_B0_Floor$FLOOR)
+CF_B0_Floor <- confusionMatrix(KNNB0Floor)
+table_CF_B0_Floor <- table(predictions_KNNB0Floor, Test_B0_Floor$FLOOR)
+CF_BO_Floor
 accuracy_KNNB0Floor <- (sum(diag(CF_B0_Floor))) / sum(CF_B0_Floor)
 accuracy_KNNB0Floor <- accuracy_KNNB0Floor * 100
 accuracy_KNNB0Floor
+CF_BO_Floor <- confusionMatrix(CF_B0_Floor)
+
+#predictions_KNNB0 - B0 noticeble errors, needs check 
+# 0/1 = 12
+# 1/0 = 5, 1/2 = 4
+# 2/1 = 8, 2/3 = 13
+# 3/2 = 15
+
+#           PREDICTIONS_KNNB0Floor   
+#     A         0   1   2   3 floors
+#     C     0  79  12   1   0
+#     T     1   5 120   4   0
+#     U     2   0   8 116  13
+#     AL    3   0   1  15 119
+
+#Overall Statistics
+#Accuracy : 0.8803          
+#95% CI : (0.8484, 0.9076)
+#Kappa : 0.839  
 
 # B1----
 ## Lat----
@@ -155,11 +177,27 @@ KNNB1Floor
 #5    0.867244  0.8226709
 
 #Confusion matrix & KPI----
-CF_B1_Floor <- table(predictions_KNNB1Floor, Test_B1_Floor$FLOOR)
+CF_B1_Floor <- confusionMatrix(KNNB1Floor)
+CF_B1_Floor
+table_CF_B1_Floor <- table(predictions_KNNB1Floor, Test_B1_Floor$FLOOR)
 accuracy_KNNB1Floor <- (sum(diag(CF_B1_Floor))) / sum(CF_B1_Floor)
 accuracy_KNNB1Floor <- accuracy_KNNB1Floor * 100
 accuracy_KNNB1Floor
-confusionMatrix(CF_B1_Floor)
+
+#predictions_KNNB1 - Floor noticeble errors, needs check 
+# 0/1 = 77, 0/2 = 95, 0/3 = 55
+# 1/0 = 14
+# 2/1 = 20, 2/3 = 19
+#PREDICTED B1 -   0   1   2   3 floors
+#A            0 114  77  95  55
+#C            1  14  38   6   0
+#T            2   0  20  25  19
+#UAL          3   0   3   9  12
+
+#Overall Statistics
+#Accuracy : 0.3881         
+#95% CI : (0.3446, 0.433)
+#Kappa : 0.1698   
 
 # B2----
 ## Lat----
@@ -204,126 +242,92 @@ KNNB2Floor
 #5    0.9276070  0.9073784
 
 #Confusion matrix & KPI----
-CF_B2_Floor <- table(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
+CF_B2_Floor <- confusionMatrix(KNNB1Floor)
+CF_B2_Floor
+table_CF_B2_Floor <- table(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
 accuracy_KNNB2Floor <- (sum(diag(CF_B2_Floor))) / sum(CF_B2_Floor)
 accuracy_KNNB2Floor <- accuracy_KNNB2Floor * 100
 accuracy_KNNB2Floor
-confusionMatrix(CF_B2_Floor)
 
-#Create df B2 for ConfusionMatrix----
-df_CF_B2_Floor <- tibble(table_CF_B2_Floor)
+#predictions_KNNB2 - B2 noticeble errors, needs check 
+# 0/2 = 10, 0/3 = 3
+# 1/2 = 8
+# 3/2 = 14, 3/4 = 6
+# 4/3 = 3
+#PREDICTED B2 -      0   1   2   3   4 floors
+#           A    0 180  10   1   3   0
+#           C    1   3 179   8   3   0
+#           T    2   0   1 127   3   2
+#           U    3   0   4  14 251   6
+#           AL   4   0   0   0   3  93
 
-#### REVIEW #### 
-#hoe maak ik hier drie kolommen RMSE, RSQUARED, MAE van voor vergelijking
-#en kun je die op een zinvolle manier plotten?
+#Overall Statistics
+#Accuracy : 0.9315          
+#95% CI : (0.9129, 0.9472)
+#Kappa : 0.9122   
 
-# Create df with summary stats for all buildings & predictions----
 
-StatSum_Lat <- tibble( 
-                      rmse_KNNB0Lat,
-                      rmse_KNNB1Lat,
-                      rmse_KNNB2Lat,
-                      rsquared_KNNB0Lat,
-                      rsquared_KNNB1Lat,
-                      rsquared_KNNB2Lat,
-                      MAE_KNN_B0Lat,
-                      MAE_KNN_B1Lat,
-                      MAE_KNN_B2Lat)
+# CREATE DF's for KPI check & PLOTS----
+## LATITUDE
 
-View(StatSum_Lat)
-#### REVIEW #### 3 column, 3 rows with the values
-Combi_StatSum_Lat_RMSE <- bind_cols(by = c(rmse_KNNB0Lat, 
-                                           rmse_KNNB1Lat, 
-                                           rmse_KNNB2Lat))
-Combi_StatSum_Lat_RSQ <- bind_cols(by = c(rsquared_KNNB0Lat, 
-                                          rsquared_KNNB1Lat, 
-                                          rsquared_KNNB2Lat))
-Combi_StatSum_Lat_MAE <- bind_cols(by=c(MAE_KNN_B0Lat, 
-                                        MAE_KNN_B1Lat, 
-                                        MAE_KNN_B2Lat))
+## All Lat KPI's per Floor----
+Combi_StatSum_Lat <- data.frame( RMSE = c(rmse_KNNB0Lat, 
+                                            rmse_KNNB1Lat, 
+                                            rmse_KNNB2Lat),
+                                  RSQ = c(rsquared_KNNB0Lat, 
+                                            rsquared_KNNB1Lat, 
+                                            rsquared_KNNB2Lat),
+                                  MAE = c(MAE_KNN_B0Lat, 
+                                          MAE_KNN_B1Lat, 
+                                           MAE_KNN_B2Lat),
+                                  row.names = c("B0","B1","B2"))
 
-Combi_StatSum_Lat <- bind_cols(Combi_StatSum_Lat_RMSE, Combi_StatSum_Lat_RSQ)
-Combi_StatSum_Lat <- bind_cols(Combi_StatSum_Lat, Combi_StatSum_Lat_MAE)
-#### REVIEW####
-Combi_StatSum_Lat <-  rename(Combi_StatSum_Lat, by=RMSE, by1=RSQ, by2=MAE)
-head(Combi_StatSum_Lat)
+## All Long KPI's per Floor----
+Combi_StatSum_Long <- data.frame( RMSE = c(rmse_KNNB0Long, 
+                                          rmse_KNNB1Long, 
+                                          rmse_KNNB2Long),
+                                 RSQ = c(rsquared_KNNB0Long, 
+                                         rsquared_KNNB1Long, 
+                                         rsquared_KNNB2Long),
+                                 MAE = c(MAE_KNN_B0Long, 
+                                         MAE_KNN_B1Long, 
+                                         MAE_KNN_B2Long),
+                                row.names = c("B0","B1","B2"))
 
-StatSum_Long <- tibble(
-                      rmse_KNNB0Long,
-                      rmse_KNNB1Long,
-                      rmse_KNNB2Long,
-                      rsquared_KNNB0Long,
-                      rsquared_KNNB1Long,
-                      rsquared_KNNB2Long,
-                      MAE_KNN_B0Long,
-                      MAE_KNN_B1Long,
-                      MAE_KNN_B2Long)
-View(StatSum_Long)
+## KPI RESULTS Lat & Long----
+Combi_StatSum_Lat
+#RMSE         RSQ      MAE
+#B0 6.700310  96.02481 4.025045
+#B1 6.700310  96.47526 4.448025
+#B2 6.097803  95.41785 3.412185
 
-Combi_StatSum_Long_RMSE <- bind_cols(by = c(rmse_KNNB0Long, 
-                                           rmse_KNNB1Long, 
-                                           rmse_KNNB2Long))
-Combi_StatSum_Long_RSQ <- bind_cols(by = c(rsquared_KNNB0Long, 
-                                          rsquared_KNNB1Long, 
-                                          rsquared_KNNB2Long))
-Combi_StatSum_Long_MAE <- bind_cols(by=c(MAE_KNN_B0Long, 
-                                        MAE_KNN_B1Long, 
-                                        MAE_KNN_B2Long))
+Combi_StatSum_Long
+#RMSE         RSQ      MAE
+#B0 6.525668 93.29991 4.147491
+#B1 7.890551 97.40207 5.055423
+#B2 9.278844 90.12502 4.939502
 
-Combi_StatSum_Long <- bind_cols(Combi_StatSum_Long_RMSE, Combi_StatSum_Long_RSQ)
-Combi_StatSum_Long <- bind_cols(Combi_StatSum_Long, Combi_StatSum_Long_MAE)
-
-StatSum_Floor <- tibble(
+## All accuracy Floor metrics----
+Combi_StatSum_Floor <- data.frame(acc = c(
                       accuracy_KNNB0Floor,
                       accuracy_KNNB1Floor,
-                      accuracy_KNNB2Floor)
-head(StatSum_Floor)
-Combi_StatSum_Floor <- bind_cols(by=c(accuracy_KNNB0Floor, accuracy_KNNB1Floor))
+                      accuracy_KNNB2Floor),
+                      row.names = c("B0","B1","B2"))
 
-#### REVIEW #### krijg de 3e variabele er niet bij??
-Combi_StatSum_Floor <- bind_cols(by=c(Combi_StatSum_Floor, accuracy_KNNB2Floor))
+Combi_StatSum_Floor #B1 has a low accuracy, needs check
+
+## ACCURACY RESULTS Floor per building----
+
+#accuracy metrics per building
+#B0 88.03245
+#B1 38.80903
+#B2 93.15376
 
 Combi_StatSum_Floor
-View(StatSum_Floor)
 
-#### REVIEW #### can we create tibble although B2 has 5 floors?----
-StatSum_CF_Floor <- tibble(
-                     CF_B0_Floor,
-                     CF_B1_Floor,
-                     CF_B2_Floor)
-
-#### PLOTS #### I would like to plot rmse, rsquared, MAE, accuracy for 
-# Lat, Long, Floor per metric in 1 plot and together per B0, B1, B2 with...
-
-#StatSum_Lat
-#StatSum_Long
-#StatSum_Floor
-
-#Something like this...
-
-Plot_StatSum_Lat <- StatSum_Lat %>% 
-  ggplot(aes(x = metrics, y = values)) + 
-  geom_col(aes(fill = metrics)) +
-  geom_text(aes(fill = metrics, label = round(values, digits = 3)), colour = "black") +
-  coord_flip() +
-  labs(x = "Metrics for each Building",
-       y = "RMSE",
-       title = "LATITUDE") +
-  theme_light() +
-  scale_fill_brewer(palette = "GnBu") +
-  theme(legend.position="none")
-Plot_StatSum_Lat
-
-### REVIEW hoe plot je een confusion matrix?? #### 
-df_CF_B2_Floor
-ggplot(data =  df_CF_B2_Floor, mapping = aes(x = 
-              c("0", "1", "2", "3", "4"), y = ????)) +
-  geom_tile(aes(fill = value), colour = "white") +
-  geom_text(aes(label = sprintf("%1.0f",value)), vjust = 1) +
-  scale_fill_gradient(low = "white", high = "steelblue")
-  
-
-
-
+#### PLOT CF as Crosstable #### 
+CrossTable(table_CF_B0_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
+CrossTable(table_CF_B1_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
+CrossTable(table_CF_B2_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
 
 
