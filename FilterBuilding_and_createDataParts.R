@@ -6,26 +6,18 @@ library(e1071)
 library(lubridate)
 
 # Load data----
-ToFilterData <- read_rds("ToFilterData.rds")
+Modeldata <- read_rds("ToFilterData.rds")
 
 # Sample data for train/test 
 #### PREPARE 1ST MODEL ####
 set.seed(7)
 
-#create a 25% sample of the data----
-Sample_subset_building<- ToFilterData[sample(1:nrow(ToFilterData), 7500,replace=FALSE),]
-
-#save ready data as modeldata for next models----
-saveRDS(Sample_subset_building, file = "ModelData.rds")
-
-## filter per building----
-
 # filter full data per building
-B0 <- filter(Sample_subset_building, BUILDINGID == 0)
+B0 <- filter(Modeldata, BUILDINGID == 0)
 saveRDS(B0, file = "B0_Data.rds")
-B1 <- filter(Sample_subset_building, BUILDINGID == 1)
+B1 <- filter(Modeldata, BUILDINGID == 1)
 saveRDS(B1, file = "B1_Data.rds")
-B2 <- filter(Sample_subset_building, BUILDINGID == 2)
+B2 <- filter(Modeldata, BUILDINGID == 2)
 saveRDS(B2, file = "B2_Data.rds")
 
 #### CREATE TRAIN/TEST DATASETS FOR BUILDINGS ####
