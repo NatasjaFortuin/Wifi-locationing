@@ -5,7 +5,7 @@ library(ranger)
 library(e1071)
 library(lubridate)
 
-# Load data----
+# Load dat from saved GE ready Modeldata----
 Modeldata <- read_rds("ToFilterData.rds")
 
 # Sample data for train/test 
