@@ -16,6 +16,7 @@ inTraining_B2_long <- read_rds("inTraining_B2_long.rds")
 inTraining_B0_floor <- read_rds("inTraining_B0_floor.rds")
 inTraining_B1_floor <- read_rds("inTraining_B1_floor.rds")
 inTraining_B2_floor <- read_rds("inTraining_B2_floor.rds")
+inTraining_B0_floor
 
 ## traning
 training_B0_lat <- read_rds("training_B0_lat.rds")
@@ -40,7 +41,7 @@ training_B0_floor <- read_rds("training_B0_floor.rds")
 training_B0_floor <- training_B0_floor %>% 
   select(starts_with("WAP"), FLOOR)
 training_B1_floor <- read_rds("training_B1_floor.rds")
-training_B1_floor <- training_B0_floor %>% 
+training_B1_floor <- training_B1_floor %>% 
   select(starts_with("WAP"), FLOOR)
 training_B2_floor <- read_rds("training_B2_floor.rds")
 training_B2_floor <- training_B2_floor %>% 
@@ -94,7 +95,7 @@ Fit_lat_B0 <- train(LATITUDE ~.,
 Fit_lat_B0
 saveRDS(Fit_lat_B0, file = "KNN_Fit_lat_B0.rds")
 #kmax   RMSE      Rsquared   MAE     
-#5      4.303942  0.9820568  1.887152
+#5    4.363868  0.9820019  1.845249
 
 #Fit_lat_B0 postresample----
 postResample(pred = predict(object = Fit_lat_B0, 
@@ -113,7 +114,7 @@ Fit_lat_B1 <- train(LATITUDE~.,
 Fit_lat_B1
 saveRDS(Fit_lat_B1, file = "KNN_Fit_lat_B1.rds")
 #k    RMSE       Rsquared   MAE      
-#5    4.800654  0.9820624  1.871848
+#5    4.710868  0.9832066  1.933948
 
 #Fit_lat_B1 postresample----
 postResample(pred = predict(object = Fit_lat_B1, 
@@ -132,14 +133,14 @@ Fit_lat_B2 <- train(LATITUDE~.,
 Fit_lat_B2
 saveRDS(Fit_lat_B2, file = "KNN_Fit_lat_B2.rds")
 #k   RMSE       Rsquared   MAE      
-#    3.977360  0.9799117  1.752067
+#5  4.275687  0.9768972  1.890219
 
 #Fit_lat_B2 postresample----
 postResample(pred = predict(object = Fit_lat_B2, 
                             newdata = testing_B2_lat), 
              obs = testing_B2_lat$LATITUDE)
 #   RMSE      Rsquared  MAE 
-#   3.4143251 0.9854123 1.7912365
+#   3.6507010 0.9833021 1.8463397
 
 ## LONGITUDE----
 Fit_long_B0 <- train(LONGITUDE~., 
@@ -152,14 +153,14 @@ Fit_long_B0 <- train(LONGITUDE~.,
 Fit_long_B0
 saveRDS(Fit_long_B0, file = "KNN_Fit_long_B0.rds")
 #k    RMSE       Rsquared   MAE      
-#5    5.962481  0.9436714  3.075533
+#5    3.697805  0.9781877  1.809231
 
 #Fit_long_B0 postresample----
 postResample(pred = predict(object = Fit_long_B0, 
                             newdata = testing_B0_long), 
              obs = testing_B0_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
-#   5.6387300 0.9480333 3.0377195  
+#   3.2452671 0.9828383 1.6137860  
 
 Fit_long_B1 <- train(LONGITUDE~., 
                      data = training_B1_long, 
@@ -171,14 +172,14 @@ Fit_long_B1 <- train(LONGITUDE~.,
 Fit_long_B1
 saveRDS(Fit_long_B1, file = "KNN_Fit_long_B1.rds")
 #k    RMSE       Rsquared   MAE      
-#5    7.441228  0.9775019  3.678046
+#5    5.041457  0.9897686  1.998913
 
 #Fit_long_B1 postresample----
 postResample(pred = predict(object = Fit_long_B1, 
                             newdata = testing_B1_long), 
              obs = testing_B1_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
-#   6.6183878 0.9819367 3.3280642
+#   5.6309285 0.9870586 1.9145439
 
 Fit_long_B2 <- train(LONGITUDE~., 
                      data = training_B2_long, 
@@ -190,21 +191,19 @@ Fit_long_B2 <- train(LONGITUDE~.,
 Fit_long_B2
 saveRDS(Fit_long_B2, file = "KNN_Fit_long_B2.rds")
 #k   RMSE       Rsquared   MAE      
-#5    7.577559  0.9354733  3.559215   
+#5  4.692082  0.9750738  1.995312   
 
 #Fit_long_B2 postresample----
 postResample(pred = predict(object = Fit_long_B2, 
                             newdata = testing_B2_long), 
              obs = testing_B2_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
-#   7.3556032 0.9404916 3.3675497   
+#   5.1232674 0.9713132 2.1970896   
 
 ## FLOOR----
-training_B0_floor_factor <- training_B0_floor %>% 
-  mutate(FLOOR = as.factor(FLOOR))
-
+#B0_Floor not set to factor----
 Fit_floor_B0 <- train(FLOOR~., 
-                      data = training_B0_floor_factor, 
+                      data = training_B0_floor, 
                       method = "kknn", 
                       trControl=fitControl, 
                       tuneLength = 5,
@@ -212,32 +211,48 @@ Fit_floor_B0 <- train(FLOOR~.,
                       preProcess = c("zv", "medianImpute"))
 Fit_floor_B0
 saveRDS(Fit_floor_B0, file = "KNN_Fit_floor_B0.rds")
-#k   Accuracy   Kappa     
-#13    0.9223176  0.8961545   
+#k   Accuracy   Kappa       MAE
+#5    0.141775  0.9828638  0.03481947
+
+#B0_Floor set to factor----
+training_B0_floor_factor <- training_B0_floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
+Fit_floor_B0_factor <- train(FLOOR~., 
+                      data = training_B0_floor_factor, 
+                      method = "kknn", 
+                      trControl=fitControl, 
+                      tuneLength = 5,
+                      verboseIter = TRUE,
+                      preProcess = c("zv", "medianImpute"))
+Fit_floor_B0_factor
+saveRDS(Fit_floor_B0_factor, file = "KNN_Fit_floor_B0_factor.rds")
+
+#kmax  Accuracy   Kappa    
+#5    0.9814624  0.975189
 
 training_B1_floor_factor <- training_B1_floor %>% 
   mutate(FLOOR = as.factor(FLOOR))
-Fit_floor_B1 <- train(FLOOR~., 
+Fit_floor_B1_factor <- train(FLOOR~., 
                       data = training_B1_floor_factor, 
                       method = "kknn", 
                       trControl=fitControl,tuneLength = 5,
                       verboseIter = TRUE,
                       preProcess = c("zv", "medianImpute"))
-Fit_floor_B1
-saveRDS(Fit_floor_B1, file = "KNN_Fit_floor_B1.rds")
+Fit_floor_B1_factor
+saveRDS(Fit_floor_B1_factor, file = "KNN_Fit_floor_B1_factor.rds")
 #k   Accuracy   Kappa     
-#7   0.9157089  0.8873319   
+#5    0.9817207  0.9755317  
 
 training_B2_floor_factor <- training_B2_floor %>% 
   mutate(FLOOR = as.factor(FLOOR))
-Fit_floor_B2 <- train(FLOOR~., 
+Fit_floor_B2_factor <- train(FLOOR~., 
                       data = training_B2_floor_factor, 
                       method = "kknn", 
                       trControl=fitControl, 
                       tuneLength = 5,
                       verboseIter = TRUE,
                       preProcess = c("zv", "medianImpute"))
-Fit_floor_B2
-saveRDS(Fit_floor_B2, file = "KNN_Fit_floor_B2.rds")
+Fit_floor_B2_factor
+saveRDS(Fit_floor_B2_factor, file = "KNN_Fit_floor_B2_factor.rds")
 #k    Accuracy   Kappa     
-#7    0.9603923  0.9494419   
+#5    0.9826571  0.9778669

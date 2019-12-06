@@ -43,7 +43,7 @@ validationData[,1:465] <- validationData[,1:465] + 105  #make all WAP's positive
 summary(validationData$WAP108) #check conversion of WAP's to positives
 
 # Converting data types----
-trainingData$FLOOR <- as.factor(trainingData$FLOOR)
+#trainingData$FLOOR <- as.factor(trainingData$FLOOR)
 trainingData$BUILDINGID <- as.factor(trainingData$BUILDINGID)
 #trainingData$RELATIVEPOSITION <- as.factor(trainingData$RELATIVEPOSITION)
 #trainingData$USERID <- as.character(trainingData$USERID)
