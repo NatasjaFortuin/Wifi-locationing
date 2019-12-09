@@ -73,6 +73,10 @@ rsquared_RFB0Long
 MAE_RF_B0Long <- MAE(predictions_RFB0Long, Test_B0_long$LONGITUDE)
 
 ## Floor----
+training_B0_floor_factor <- training_B0_floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
+Test_B0_Floor <- Test_B0_Floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
 predictions_RFB0Floor= predict(object = RFB0Floor, newdata = Test_B0_Floor)
 
 #Confusion matrix & KPI----
@@ -121,6 +125,10 @@ rsquared_RFB1Long
 MAE_RF_B1Long <- MAE(predictions_RFB1Long, Test_B1_long$LONGITUDE)
 
 ## Floor----
+training_B1_floor_factor <- training_B1_floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
+Test_B1_Floor <- Test_B1_Floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
 predictions_RFB1Floor= predict(object = RFB1Floor, newdata = Test_B1_Floor)
 
 #Confusion matrix & KPI----
@@ -228,10 +236,17 @@ RF_Combi_StatSum_Floor_acc <- data.frame(acc = c(
                       accuracy_RFB2Floor),
                       row.names = c("B0","B1","B2"))
 
-##### REVIEW#####
+kappa_RFB0Floor <- Kappa(table_RF_CF_B0_Floor)
+kappa_RFB0Floor
+kappa_RFB1Floor <- Kappa(table_RF_CF_B1_Floor)
+kappa_RFB1Floor
+kappa_RFB2Floor <- Kappa(table_RF_CF_B2_Floor)
+kappa_RFB2Floor
+
+
 RF_Combi_StatSum_Floor_kappa <- data.frame(kappa = c(kappa_RFB0Floor$Unweighted, 
-                                                 kappa_RFB1Floor$Unweighted, 
-                                                 kappa_RFB2Floor$Unweighted))
+                                                       kappa_RFB1Floor$Unweighted, 
+                                                       kappa_RFB2Floor$Unweighted))
 RF_Combi_StatSum_Floor_acc #B1 has a low accuracy, needs check
 #acc
 #B0   99.77099
@@ -240,19 +255,18 @@ RF_Combi_StatSum_Floor_acc #B1 has a low accuracy, needs check
 
 RF_Combi_StatSum_Floor_kappa
 #kappa
-
+#       kappa
+#1      0.9969313489
+#2      0.0017695433
+#3      -0.0029030734
+#4      0.0016738360
+#5      0.9994596997
+#6      0.0005401941
 
 #### PLOT CF as Crosstable #### 
 CrossTable(table_RF_CF_B0_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
 CrossTable(table_RF_CF_B1_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
 CrossTable(table_RF_CF_B2_Floor, prop.chisq = FALSE, dnn = c('predicted', 'actual'))
-kappa_RFB0Floor <- Kappa(table_RF_CF_B0_Floor)
-kappa_RFB0Floor
-kappa_RFB1Floor <- Kappa(table_RF_CF_B1_Floor)
-kappa_RFB1Floor
-kappa_RFB2Floor <- Kappa(table_RF_CF_B2_Floor)
-kappa_RFB2Floor
-
 
 #### IF MORE MODELS COMPARE THEM WITH RESAMPLING ####
 

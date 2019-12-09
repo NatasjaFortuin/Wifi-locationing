@@ -237,11 +237,11 @@ Fit_floor_B1_factor <- train(FLOOR~.,
                       method = "kknn", 
                       trControl=fitControl,tuneLength = 5,
                       verboseIter = TRUE,
-                      preProcess = c("zv", "medianImpute"))
+                      preProcess = c("zv"))
 Fit_floor_B1_factor
 saveRDS(Fit_floor_B1_factor, file = "KNN_Fit_floor_B1_factor.rds")
 #k   Accuracy   Kappa     
-#5    0.9817207  0.9755317  
+#5    0.9971583  0.9961736 
 
 training_B2_floor_factor <- training_B2_floor %>% 
   mutate(FLOOR = as.factor(FLOOR))

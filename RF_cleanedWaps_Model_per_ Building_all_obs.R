@@ -41,7 +41,7 @@ training_B0_floor <- read_rds("training_B0_floor.rds")
 training_B0_floor <- training_B0_floor %>% 
   select(starts_with("WAP"), FLOOR)
 training_B1_floor <- read_rds("training_B1_floor.rds")
-training_B1_floor <- training_B1_floor_rf_factor %>% 
+training_B1_floor <- training_B1_floor %>% 
   select(starts_with("WAP"), FLOOR)
 training_B2_floor <- read_rds("training_B2_floor.rds")
 training_B2_floor <- training_B2_floor %>% 

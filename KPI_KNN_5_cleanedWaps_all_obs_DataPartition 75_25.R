@@ -63,6 +63,8 @@ Test_B1_long <- read_rds("testing_B1_long.rds")
 Test_B2_long <- read_rds("testing_B2_long.rds")
 Test_B0_Floor <- read_rds("testing_B0_floor.rds")
 Test_B1_Floor <- read_rds("testing_B1_floor.rds")
+Test_B1_Floor <- Test_B1_Floor %>% 
+  mutate(FLOOR = as.factor(FLOOR))
 Test_B2_Floor <- read_rds("testing_B2_floor.rds")
 
 #### PREDICT & CHECK KPI  on test data ####
@@ -106,7 +108,7 @@ MAE_KNN_B0Long <- MAE(predictions_KNNB0Long, Test_B0_long$LONGITUDE)
 predictions_KNNB0Floor= predict(object = KNNB0Floor, newdata = Test_B0_Floor)
 
 #Confusion matrix & KPI----
-CF_B0_Floor <- confusionMatrix(KNNB0Floor)
+CF_B0_Floor <- confusionMatrix(data = predictions_KNNB0Floor ,Test_B0_Floor$FLOOR)
 CF_B0_Floor
 table_CF_B0_Floor <- table(predictions_KNNB0Floor, Test_B0_Floor$FLOOR)
 accuracy_KNNB0Floor <- (sum(diag(table_CF_B0_Floor))) / sum(table_CF_B0_Floor)
@@ -154,7 +156,7 @@ MAE_KNN_B1Long <- MAE(predictions_KNNB1Long, Test_B1_long$LONGITUDE)
 predictions_KNNB1Floor= predict(object = KNNB1Floor, newdata = Test_B1_Floor)
 
 #Confusion matrix & KPI----
-CF_B1_Floor <- confusionMatrix(KNNB1Floor)
+CF_B1_Floor <- confusionMatrix(data = predictions_KNNB1Floor ,Test_B1_Floor$FLOOR)
 CF_B1_Floor
 table_CF_B1_Floor <- table(predictions_KNNB1Floor, Test_B1_Floor$FLOOR)
 accuracy_KNNB1Floor <- (sum(diag(table_CF_B1_Floor))) / sum(table_CF_B1_Floor)
@@ -202,7 +204,7 @@ MAE_KNN_B2Long <- MAE(predictions_KNNB2Long, Test_B2_long$LONGITUDE)
 predictions_KNNB2Floor= predict(object = KNNB2Floor, newdata = Test_B2_Floor)
 
 #Confusion matrix & KPI----
-CF_B2_Floor <- confusionMatrix(KNNB2Floor)
+CF_B2_Floor <- confusionMatrix(data = predictions_KNNB2Floor ,Test_B2_Floor$FLOOR)
 CF_B2_Floor
 table_CF_B2_Floor <- table(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
 accuracy_KNNB2Floor <- (sum(diag(table_CF_B2_Floor))) / sum(table_CF_B2_Floor)
@@ -258,7 +260,6 @@ Combi_StatSum_Floor_acc <- data.frame(acc = c(
                       accuracy_KNNB2Floor),
                       row.names = c("B0","B1","B2"))
 
-##### REVIEW#####
 Combi_StatSum_Floor_kappa <- data.frame(kappa = c(kappa_KNNB0Floor$Unweighted, 
                                                  kappa_KNNB1Floor$Unweighted, 
                                                  kappa_KNNB2Floor$Unweighted))
