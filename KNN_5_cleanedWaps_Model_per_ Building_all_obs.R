@@ -216,7 +216,7 @@ saveRDS(Fit_floor_B0, file = "KNN_Fit_floor_B0.rds")
 
 #B0_Floor set to factor----
 training_B0_floor_factor <- training_B0_floor %>% 
-  mutate(FLOOR = as.factor(FLOOR))
+  mutate(FLOOR = as.character(FLOOR))
 Fit_floor_B0_factor <- train(FLOOR~., 
                       data = training_B0_floor_factor, 
                       method = "kknn", 
@@ -231,7 +231,7 @@ saveRDS(Fit_floor_B0_factor, file = "KNN_Fit_floor_B0_factor.rds")
 #5    0.9814624  0.975189
 
 training_B1_floor_factor <- training_B1_floor %>% 
-  mutate(FLOOR = as.factor(FLOOR))
+  mutate(FLOOR = as.character(FLOOR))
 Fit_floor_B1_factor <- train(FLOOR~., 
                       data = training_B1_floor_factor, 
                       method = "kknn", 
@@ -244,7 +244,7 @@ saveRDS(Fit_floor_B1_factor, file = "KNN_Fit_floor_B1_factor.rds")
 #5    0.9971583  0.9961736 
 
 training_B2_floor_factor <- training_B2_floor %>% 
-  mutate(FLOOR = as.factor(FLOOR))
+  mutate(FLOOR = as.character(FLOOR))
 Fit_floor_B2_factor <- train(FLOOR~., 
                       data = training_B2_floor_factor, 
                       method = "kknn", 
