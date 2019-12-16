@@ -223,7 +223,7 @@ FP_KNNB2Long= predict(object = KNNB2Long, newdata = B2_long_v)
 
 # Long KPI----
 postResample(pred = FP_KNNB2Long, obs = B2_long_v$LONGITUDE)
-#   RMSE      Rsquared   MAE 
+  #   RMSE      Rsquared   MAE 
 # 12.8153956  0.8364717  8.3325801
 
 error_FP_KNNB2Long <- FP_KNNB2Long - B2_long_v$LONGITUDE 
@@ -444,3 +444,4 @@ b <- PPPlotBB2$FP_KNNB2Long
 c <- PPPlotBB2$FP_KNNB2Lat
 scatterplot3d::scatterplot3d(b, c, a, pch = 20, angle = 45, 
                              main = "Building 2")
+
