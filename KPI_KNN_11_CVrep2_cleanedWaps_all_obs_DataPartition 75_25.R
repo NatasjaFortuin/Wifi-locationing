@@ -108,7 +108,7 @@ MAE_KNN_B0Long <- MAE(predictions_KNNB0Long, Test_B0_long$LONGITUDE)
 predictions_KNNB0Floor= predict(object = KNNB0Floor, newdata = Test_B0_Floor)
 
 #Confusion matrix & KPI----
-CF_B0_Floor <- confusionMatrix(data = predictions_KNNB0Floor ,Test_B0_Floor$FLOOR)
+CF_B0_Floor <- confusionMatrix(predictions_KNNB0Floor, Test_B0_Floor$FLOOR)
 CF_B0_Floor
 table_CF_B0_Floor <- table(predictions_KNNB0Floor, Test_B0_Floor$FLOOR)
 accuracy_KNNB0Floor <- (sum(diag(table_CF_B0_Floor))) / sum(table_CF_B0_Floor)
@@ -156,7 +156,7 @@ MAE_KNN_B1Long <- MAE(predictions_KNNB1Long, Test_B1_long$LONGITUDE)
 predictions_KNNB1Floor= predict(object = KNNB1Floor, newdata = Test_B1_Floor)
 
 #Confusion matrix & KPI----
-CF_B1_Floor <- confusionMatrix(data = predictions_KNNB1Floor ,Test_B1_Floor$FLOOR)
+CF_B1_Floor <- confusionMatrix(predictions_KNNB1Floor, Test_B1_Floor$FLOOR)
 CF_B1_Floor
 table_CF_B1_Floor <- table(predictions_KNNB1Floor, Test_B1_Floor$FLOOR)
 accuracy_KNNB1Floor <- (sum(diag(table_CF_B1_Floor))) / sum(table_CF_B1_Floor)
@@ -204,7 +204,7 @@ MAE_KNN_B2Long <- MAE(predictions_KNNB2Long, Test_B2_long$LONGITUDE)
 predictions_KNNB2Floor= predict(object = KNNB2Floor, newdata = Test_B2_Floor)
 
 #Confusion matrix & KPI----
-CF_B2_Floor <- confusionMatrix(data = predictions_KNNB2Floor ,Test_B2_Floor$FLOOR)
+CF_B2_Floor <- confusionMatrix(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
 CF_B2_Floor
 table_CF_B2_Floor <- table(predictions_KNNB2Floor, Test_B2_Floor$FLOOR)
 accuracy_KNNB2Floor <- (sum(diag(table_CF_B2_Floor))) / sum(table_CF_B2_Floor)
@@ -245,7 +245,7 @@ Combi_StatSum_Lat
 #   RMSE      RSQ      MAE
 #B0 4.200349 98.38193 2.06757
 #B1 4.200349 98.62613 2.04700
-#B2 3.650701 98.32693 1.84634#
+#B2 3.650701 98.32693 1.84634
 
 Combi_StatSum_Long
 #   RMSE      RSQ      MAE

@@ -159,7 +159,7 @@ FP_KNNB1Lat= predict(object = KNNB1Lat, newdata = B1_lat_v)
 # Lat KPI----
 postResample(pred = FP_KNNB1Lat, obs = B1_lat_v$LATITUDE)
 #   RMSE      Rsquared   MAE 
-# 13.6616805  0.8534788  7.9349223 
+# 13.0291192  0.8658708  7.6259698 
 
 error_FP_KNNB1Lat <- FP_KNNB1Lat - B1_lat_v$LATITUDE 
 rmse_FP_KNNB1Lat <- sqrt(mean(error_FP_KNNB1Lat^2))
@@ -177,7 +177,7 @@ FP_KNNB1Long= predict(object = KNNB1Long, newdata = B1_long_v)
 # Long KPI----
 postResample(pred = FP_KNNB1Long, obs = B1_long_v$LONGITUDE)
 #   RMSE      Rsquared   MAE 
-# 12.6285945  0.9273226  7.9146620
+# 12.1689183  0.9321985  7.5951471 
 
 error_FP_KNNB1Long <- FP_KNNB1Long - B1_long_v$LONGITUDE 
 rmse_FP_KNNB1Long <- sqrt(mean(error_FP_KNNB1Long^2))
@@ -224,7 +224,7 @@ FP_KNNB2Long= predict(object = KNNB2Long, newdata = B2_long_v)
 # Long KPI----
 postResample(pred = FP_KNNB2Long, obs = B2_long_v$LONGITUDE)
   #   RMSE      Rsquared   MAE 
-# 12.8153956  0.8364717  8.3325801
+# 13.7408084  0.8126464  8.7859488 
 
 error_FP_KNNB2Long <- FP_KNNB2Long - B2_long_v$LONGITUDE 
 rmse_FP_KNNB2Long <- sqrt(mean(error_FP_KNNB2Long^2))
@@ -282,10 +282,10 @@ FP_Combi_StatSum_Lat
 #B2 13.81677 76.50689 8.547353
 
 FP_Combi_StatSum_Long
-#   RMSE      RSQ      MAE
-#B0  9.356922 87.15947 5.698902
-#B1 12.628595 92.37601 7.914662
-#B2 12.815396 83.32801 8.332580
+#RMSE      RSQ      MAE
+#B0  9.583003 86.53147 5.768090
+#B1 12.168918 92.92093 7.595147
+#B2 13.740808 80.83327 8.785949
 
 ## KPI RESULTS Floor----
 

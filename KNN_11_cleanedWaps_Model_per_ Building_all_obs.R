@@ -95,14 +95,14 @@ Fit_lat_B0 <- train(LATITUDE ~.,
 Fit_lat_B0
 saveRDS(Fit_lat_B0, file = "KNN_Fit_lat_B0.rds")
 #kmax   RMSE      Rsquared   MAE     
-#5    4.196180  0.9831798  1.770077
+#5    4.147619  0.9833132  1.750006
 
 #Fit_lat_B0 postresample----
 postResample(pred = predict(object = Fit_lat_B0, 
                             newdata = testing_B0_lat), 
              obs = testing_B0_lat$LATITUDE)
 #   RMSE      Rsquared    MAE 
-#5  4.2003490 0.9840869 2.0675697 
+#4.2222506 0.9838355 1.9643230 
 
 Fit_lat_B1 <- train(LATITUDE~., 
                     data = training_B1_lat, 
@@ -111,10 +111,10 @@ Fit_lat_B1 <- train(LATITUDE~.,
                     tuneLength = 11,
                     verboseIter = TRUE,
                     preProcess = c("zv"))
- Fit_lat_B1
+Fit_lat_B1
 saveRDS(Fit_lat_B1, file = "KNN_Fit_lat_B1.rds")
 #k    RMSE        Rsquared    MAE      
-# 5    4.470906  0.9847246  1.862832
+# 4.488453    0.9847380     1.836569
 
 #Fit_lat_B1 postresample----
 postResample(pred = predict(object = Fit_lat_B1, 
@@ -131,9 +131,9 @@ Fit_lat_B2 <- train(LATITUDE~.,
                     verboseIter = TRUE,
                     preProcess = c("zv"))
 Fit_lat_B2
- saveRDS(Fit_lat_B2, file = "KNN_Fit_lat_B2.rds")
+saveRDS(Fit_lat_B2, file = "KNN_Fit_lat_B2.rds")
 #k   RMSE       Rsquared   MAE      
-#5  3.957463  0.9798979  1.735383
+#5    3.910274  0.9804143  1.716719
 
 #Fit_lat_B2 postresample----
 postResample(pred = predict(object = Fit_lat_B2, 
@@ -150,17 +150,17 @@ Fit_long_B0 <- train(LONGITUDE~.,
                      tuneLength = 11,
                      verboseIter = TRUE,
                      preProcess = c("zv"))
-   Fit_long_B0
+Fit_long_B0
 saveRDS(Fit_long_B0, file = "KNN_Fit_long_B0.rds")
 #k    RMSE       Rsquared   MAE      
-#5    3.478721  0.9809065  1.700386
+#5    3.559949  0.9796858  1.707511
 
 #Fit_long_B0 postresample----
 postResample(pred = predict(object = Fit_long_B0, 
                             newdata = testing_B0_long), 
              obs = testing_B0_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
-#   3.2758884 0.9825139 1.5674880   
+#   3.2452671 0.9828383 1.6137860   
 
 Fit_long_B1 <- train(LONGITUDE~., 
                      data = training_B1_long, 
@@ -169,17 +169,17 @@ Fit_long_B1 <- train(LONGITUDE~.,
                      tuneLength = 11,
                      verboseIter = TRUE,
                      preProcess = c("zv"))
-    Fit_long_B1
+Fit_long_B1
 saveRDS(Fit_long_B1, file = "KNN_Fit_long_B1.rds")
 #k    RMSE       Rsquared   MAE      
-#5   5.200595  0.9886392  2.093923
+# 5    5.204678  0.9887383  2.085579
 
 #Fit_long_B1 postresample----
 postResample(pred = predict(object = Fit_long_B1, 
                             newdata = testing_B1_long), 
              obs = testing_B1_long$LONGITUDE)
 #   RMSE      Rsquared  MAE 
-#   4.7377253 0.9909077 1.8381794 
+#   4.7781173 0.9907427 1.9588145 
 
 Fit_long_B2 <- train(LONGITUDE~., 
                      data = training_B2_long, 
@@ -188,10 +188,10 @@ Fit_long_B2 <- train(LONGITUDE~.,
                      tuneLength = 11,
                      verboseIter = TRUE,
                      preProcess = c("zv"))
-  Fit_long_B2
+Fit_long_B2
 saveRDS(Fit_long_B2, file = "KNN_Fit_long_B2.rds")
-#k   RMSE       Rsquared   MAE      
-#5    4.904144  0.9730170  1.937362  
+#k    RMSE       Rsquared   MAE      
+#5    4.945733  0.9724262  1.969431  
 
 #Fit_long_B2 postresample----
 postResample(pred = predict(object = Fit_long_B2, 
@@ -216,7 +216,7 @@ Fit_floor_B0_factor
 saveRDS(Fit_floor_B0_factor, file = "KNN_Fit_floor_B0_factor.rds")
 
 #kmax  Accuracy   Kappa    
-#5    0.9828625  0.9770594
+#5    0.9812098  0.9748463
 
 training_B1_floor_factor <- training_B1_floor %>% 
   mutate(FLOOR = as.character(FLOOR))
