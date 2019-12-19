@@ -110,7 +110,7 @@ FP_KNNB0Lat= predict(object = KNNB0Lat, newdata = B0_lat_v)
 # Lat KPI----
 postResample(pred = FP_KNNB0Lat, obs = B0_lat_v$LATITUDE)
 #   RMSE      Rsquared   MAE 
-# 12.0127158  0.8582513  6.6947009
+# 12.3256486  0.8508916  6.8091001 
 
 error_FP_KNNB0Lat <- FP_KNNB0Lat - B0_lat_v$LATITUDE 
 rmse_FP_KNNB0Lat <- sqrt(mean(error_FP_KNNB0Lat^2))
@@ -177,7 +177,7 @@ FP_KNNB1Long= predict(object = KNNB1Long, newdata = B1_long_v)
 # Long KPI----
 postResample(pred = FP_KNNB1Long, obs = B1_long_v$LONGITUDE)
 #   RMSE      Rsquared   MAE 
-# 12.1689183  0.9321985  7.5951471 
+# 11.7768988  0.9363489  7.4110409  
 
 error_FP_KNNB1Long <- FP_KNNB1Long - B1_long_v$LONGITUDE 
 rmse_FP_KNNB1Long <- sqrt(mean(error_FP_KNNB1Long^2))
@@ -277,14 +277,14 @@ FP_Combi_StatSum_Long <- data.frame( RMSE = c(rmse_FP_KNNB0Long,
 ## KPI RESULTS Lat & Long----
 FP_Combi_StatSum_Lat
 #   RMSE      RSQ      MAE
-#B0 12.01272 85.79767 6.694701
-#B1 13.66168 84.82729 7.934922
+#B0 12.32565 85.04809 6.809100
+#B1 13.02912 86.19981 7.625970
 #B2 13.81677 76.50689 8.547353
 
 FP_Combi_StatSum_Long
 #RMSE      RSQ      MAE
-#B0  9.583003 86.53147 5.768090
-#B1 12.168918 92.92093 7.595147
+#B0  9.356922 87.15947 5.698902
+#B1 11.776899 93.36969 7.411041
 #B2 13.740808 80.83327 8.785949
 
 ## KPI RESULTS Floor----
@@ -307,7 +307,7 @@ CF_FP_B1Floor <- table_FP_CF_B1_Floor
 kappa_FP_B2Floor <- Kappa(FP_CF_B2_Floor)
 CF_FP_B2Floor <- table_FP_CF_B2_Floor
 
-CF_FP_B0Floor
+CF_FP_B2Floor
 kappa_FP_B0Floor
 
 Combi_StatSum_Floor_kappa <- data.frame(Kappa= c(CF_FP_B0Floor, 
@@ -357,7 +357,7 @@ df_long_lat_floor_B1 <- bind_cols(x = df_pred_KNN_B1_lat,
 df_long_lat_floor_B2 <- bind_cols(x = df_pred_KNN_B2_lat, 
                             y = df_pred_KNN_B2_long,
                             z = df_pred_KNN_B2_floor)
-
+head(df_long_lat_floor_B0)
 #### PLOTS ####
 
 # Predicted long/lat per building----
@@ -408,7 +408,7 @@ PPPlotBB0 <- PPPlotBB0[,1:4]
 z <- PPPlotBB0$z
 x <- PPPlotBB0$FP_KNNB0Long
 y <- PPPlotBB0$FP_KNNB0Lat
-scatterplot3d::scatterplot3d(x, y, z, pch = 20, angle = 45, 
+scatterplot3d::scatterplot3d(x, y, z, pch = 20, angle = 45, color = "red",
                            main = "Building 0")
 
 # BB1----
@@ -424,7 +424,7 @@ PPPlotBB1 <- PPPlotBB1[,1:4]
 a <- PPPlotBB1$z
 b <- PPPlotBB1$FP_KNNB1Long
 c <- PPPlotBB1$FP_KNNB1Lat
-scatterplot3d::scatterplot3d(b, c, a, pch = 20, angle = 45, 
+scatterplot3d::scatterplot3d(b, c, a, pch = 20, angle = 45, color = "orange",
                              main = "Building 1")
 # 
 # BB2----
@@ -442,6 +442,6 @@ PPPlotBB2 <- PPPlotBB2[,1:4]
 a <- PPPlotBB2$z
 b <- PPPlotBB2$FP_KNNB2Long
 c <- PPPlotBB2$FP_KNNB2Lat
-scatterplot3d::scatterplot3d(b, c, a, pch = 20, angle = 45, 
+scatterplot3d::scatterplot3d(b, c, a, pch = 20, angle = 45, color = "blue",
                              main = "Building 2")
 
